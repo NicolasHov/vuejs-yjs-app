@@ -3,13 +3,20 @@
     <h1>Real-time collaboration with Y.js</h1>
     <textarea :style="{ color: user1Color }" v-model="user1Text"></textarea>
     <textarea :style="{ color: user2Color }" v-model="user2Text"></textarea>
+    <div>user 1 : {{ ytext1 }}</div>
+    <div>user 2 : {{ ytext2 }}</div>
   </div>
 </template>
 
 <script>
+
 import * as Y from 'yjs'
-// import database from './firebase/firebase'
-import db from './firebase/firebase.js';
+
+// Syntax for firebase v8
+import database from './firebase/firebase'
+
+import firebase from 'firebase/app';
+import 'firebase/database';
 
 export default {
   data() {
@@ -24,8 +31,6 @@ export default {
     }
   },
   mounted() {
-
-    console.log(db.ref('user/'));
     const ydoc = new Y.Doc()
     const ytext1 = ydoc.getText('user1-text')
     const ytext2 = ydoc.getText('user2-text')
@@ -40,7 +45,7 @@ export default {
       database.ref('ytext/user2-text').set(ytext2.toJSON())
     })
 
-    db.ref('ytext/user1-text').once('value', (snapshot) => {
+    database.ref('ytext/user1-text').once('value', (snapshot) => {
       const data = snapshot.val()
       if (data !== null) {
         ytext1.applyUpdate(Y.encodeStateAsUpdate(Y.decodeStateVector(data)))
@@ -71,6 +76,19 @@ export default {
     updateUser2Yjs() {
       this.ytext2.delete(0, this.ytext2.length)
       this.ytext2.insert(0, this.user2Text)
+    },
+    getTextUserFromDB(userId) { // user1-text or user2-text
+      const dbRef = firebase.database().ref();
+      dbRef.child("ytext").child(`user${userId}-text`).get().then((snapshot) => {
+        if (snapshot.exists()) {
+          console.log(userId + ": " + snapshot.val());
+          return snapshot.val();
+        } else {
+          console.log("No data available");
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
     }
   },
   watch: {
