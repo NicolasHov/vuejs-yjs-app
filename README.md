@@ -1,4 +1,4 @@
-# vuejs-yjs-app
+# 👩‍👩‍👧‍👦 vuejs-yjs-app
 
 A minimal app to collaborate on a project and store data.
 It uses the shared editing framework [Y.js](https://yjs.dev/) and [Firebase database](https://firebase.google.com/docs/database) to store and sync data.
