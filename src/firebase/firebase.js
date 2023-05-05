@@ -3,14 +3,13 @@ import 'firebase/database';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyD-gsYDhvCi3Fqvl7SXWpcKA8IAiIKqk44', //TODO: process.env.FIREBASE_API_KEY,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY, //for help: https://jasonwatmore.com/post/2022/05/28/vue-3-vite-access-environment-variables-from-dotenv-env
   authDomain: 'vuejs-yjs-app.firebaseapp.com',
   projectId: 'vuejs-yjs-app',
   storageBucket: 'vuejs-yjs-app.appspot.com',
   messagingSenderId: '392077488694',
-  appId: '1:392077488694:web:b5a1b9caeed1a68d105e97',
-  // databaseURL: "https://vuejs-yjs-app-default-rtdb.firebaseio.com",
-databaseURL : "https://vuejs-yjs-app-default-rtdb.europe-west1.firebasedatabase.app/"
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  databaseURL: import.meta.env.VITE_FIREBASE_URL
 }
 
 firebase.initializeApp(firebaseConfig);

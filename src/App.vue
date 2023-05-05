@@ -9,7 +9,6 @@
 </template>
 
 <script>
-
 import * as Y from 'yjs'
 
 // Syntax for firebase v8
